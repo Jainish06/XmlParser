@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Button, Alert } from 'react-native';
+import React, {useState} from 'react';
+import {View, Button, Alert} from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 import FormRenderer from './FormRenderer';
 import XMLInput from './XMLInput';
@@ -10,26 +10,26 @@ const App = () => {
 
   const handleFilePick = async () => {
     try {
-      const res = await DocumentPicker.pick({
+      const file = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.plainText],
       });
-      const fileUri = res.uri;
+      const fileUri = file.uri;
       const fileData = await fetch(fileUri);
       const text = await fileData.text();
       parseXML(text);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
-        Alert.alert("User cancelled the picker");
+        Alert.alert('File upload canceled');
       } else {
-        Alert.alert("Error", err.message);
+        Alert.alert('Error', 'Failed to upload file');
       }
     }
   };
-
-  const parseXML = (xml) => {
+  
+  const parseXML = xml => {
     xml2js.parseString(xml, (err, result) => {
       if (err) {
-        Alert.alert("Invalid XML format");
+        Alert.alert('Invalid XML format');
       } else {
         setFormData(result);
       }
@@ -37,7 +37,7 @@ const App = () => {
   };
 
   return (
-    <View style={{ padding: 20 }}>
+    <View style={{padding: 20}}>
       <Button title="Render Form from XML File" onPress={handleFilePick} />
       <XMLInput setFormData={setFormData} />
       {formData && <FormRenderer data={formData} />}
@@ -46,13 +46,6 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
-
 
 // import React, { useState } from 'react';
 // import { View, Button, TextInput, Text, Alert, ScrollView } from 'react-native';
@@ -65,22 +58,22 @@ export default App;
 //   const [xmlContent, setXmlContent] = useState('');
 //   const [parsedXml, setParsedXml] = useState(null);
 
-//   const handleFileUpload = async () => {
-//     try {
-//       const file = await DocumentPicker.pickSingle({
-//         type: [DocumentPicker.types.plainText],
-//       });
+// const handleFileUpload = async () => {
+//   try {
+//     const file = await DocumentPicker.pickSingle({
+//       type: [DocumentPicker.types.plainText],
+//     });
 
-//       const fileContent = await fetch(file.uri).then(res => res.text());
-//       renderXml(fileContent);
-//     } catch (err) {
-//       if (DocumentPicker.isCancel(err)) {
-//         Alert.alert('File upload canceled');
-//       } else {
-//         Alert.alert('Error', 'Failed to upload file');
-//       }
+//     const fileContent = await fetch(file.uri).then(res => res.text());
+//     renderXml(fileContent);
+//   } catch (err) {
+//     if (DocumentPicker.isCancel(err)) {
+//       Alert.alert('File upload canceled');
+//     } else {
+//       Alert.alert('Error', 'Failed to upload file');
 //     }
-//   };
+//   }
+// };
 
 //   const handleXmlInput = () => {
 //     renderXml(xmlContent);
