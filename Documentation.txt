@@ -1,0 +1,46 @@
+1. App.js
+
+Purpose: The main entry point of the application that manages the overall state and handles file selection and XML parsing.
+
+Key Functions and Code Blocks:
+
+    handleFilePick:
+
+        Purpose: To allow users to pick an XML file from their device.
+
+        Explanation: This function uses react-native-document-picker to open a file picker. Once a file is selected, it fetches the file data and converts it to text format, which is then passed to the parseXML function.
+
+    parseXML:
+
+        Purpose: To parse the XML string into a JavaScript object.
+
+        Explanation: This function utilizes xml2js to convert the XML string into a JavaScript object. If the parsing fails, it alerts the user about the invalid format; otherwise, it updates the state with the parsed data.
+
+2. FormRenderer.js
+Purpose: To render the form based on the parsed XML data.
+
+Key Functions and Code Blocks:
+
+    FormRenderer Component:
+
+        Purpose: To dynamically create form fields based on the XML structure.
+
+        Explanation: This component iterates over the fields defined in the parsed XML data. It calls the renderField function for each field to generate the appropriate input component.
+
+    renderField Function:
+
+        Purpose: To determine the type of input field to render based on the field type in the XML.
+
+        Explanation: This function checks the type of each field and returns the corresponding React Native component (e.g., TextInput, DatePicker, etc.). For radio buttons, it calls another function renderRadioButtons.
+
+3. XMLInput.js
+
+Purpose: To provide a text input area for users to enter XML directly.
+
+Key Functions and Code Blocks:
+
+    XMLInput Component:
+    
+        Purpose: To accept XML input from users and parse it.
+
+        Explanation: This component consists of a TextInput for XML input and a button to submit the XML. When submitted, it calls the parseXML function to process the input.
